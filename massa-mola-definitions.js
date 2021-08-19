@@ -4,7 +4,7 @@
 
 //console.log("Width =", oldWidth, "basicWidth =", basicWidth);
 
-var basicWidth = calculateBasicWidth();
+//var basicWidth = calculateBasicWidth();
 const length = 36;
 const duration = 36e3;
 
@@ -13,7 +13,7 @@ const numberOfEvaluations = 5e3;
 const interval = [0, 6 * length];
 
 let friction = 0.0,
-  m = 0.9, // mass
+  m = 1, // mass
   k = 4 * m, // string constant, the natural frequency = 2
   F0 = 1.2;
 
@@ -84,8 +84,7 @@ const board = JXG.JSXGraph.initBoard("jxgbox", {
   // },
 });
 
-board.renderer.container.style.backgroundColor = backgroundColor; // this can be obtained changing jxgbox background color
-// "#EAFAF1"; //#7BCCB5"; // none = transparent
+board.renderer.container.style.backgroundColor = backgroundColor; // this can be obtained changing jxgbox background color  // "#EAFAF1"; //#7BCCB5"; // none = transparent
 
 let xaxis = board.create(
   "axis",
@@ -97,11 +96,12 @@ let xaxis = board.create(
     name: "<math><mi>t</mi></math>", //  Tempo
     withLabel: true,
     ticks: { visible: true },
-    strokeWidth: basicWidth,
+    basicUnit: "user",
+    strokeWidth: 1, //basicWidth,
 
     label: {
       position: "rt", // possible values are 'lft', 'rt', 'top', 'bot'
-      offset: [-6 * basicWidth, -12 * basicWidth], // (in pixels)
+      offset: [-25, -25], // (in pixels)
       fontUnit: "vw",
       fontSize: 2,
       // strokeColor: "RED",
@@ -113,12 +113,14 @@ xaxis.removeTicks(xaxis.defaultTicks); // remove ticks
 
 // create new ticks
 
-let step = interval[1] / length;
+let step = Math.floor((interval[1] - interval[0]) / length);
 let ticksArray = [...Array(20 * length).keys()].map((i) => step * i);
 let ticksLabels = ticksArray.map((i) => (i / step).toString());
 
 let ticks = board.create("ticks", [xaxis, ticksArray], {
+  //ticksArray
   labels: ticksLabels,
+  basicUnit: "user",
   strokeColor: "black",
   majorHeight: 5,
   drawlabels: true,
@@ -203,13 +205,14 @@ const line = board.create(
   { visible: false, straightFirst: false, straightLast: false }
 );
 const pointString = board.create("glider", [0, 0, line], {
-  name: "", //<strong>P</strong>",
-  size: 3 * basicWidth,
+  name: "", // "<strong>P</strong>",
+  sizeUnit: "user",
+  size: 5, //4 * basicWidth,
   needsRegularUpdate: true,
   fillColor: myRed,
   label: {
     autoPosition: true,
-    offset: [basicWidth, basicWidth],
+    offset: [-3, 3],
     fontUnit: "vw",
     fontSize: 2,
   },
@@ -218,7 +221,8 @@ const pointString = board.create("glider", [0, 0, line], {
 const turtle = board
   .create("turtle", [0, 0], {
     lastArrow: false,
-    strokeWidth: Math.max(0.5 * basicWidth, 2),
+    sizeUnit: "user",
+    strokeWidth: 2, // Math.max(0.5 * basicWidth, 2),
     strokeColor: "olive",
     strokeOpacity: 1,
     name: "<math>  <mi>u(t)</mi>  </math>",
@@ -256,7 +260,8 @@ spring1 = createSpringPoints(
 for (let i = 0; i < spring1.length - 1; i++) {
   board.create("segment", [spring1[i], spring1[i + 1]], {
     color: "black",
-    strokeWidth: basicWidth,
+    sizeUnit: "user",
+    strokeWidth: 2, // basicWidth,
   });
 }
 
@@ -273,7 +278,8 @@ spring2 = createSpringPoints(
 for (let i = 0; i < spring2.length - 1; i++) {
   board.create("segment", [spring2[i], spring2[i + 1]], {
     color: "blue",
-    strokeWidth: basicWidth,
+    basicUnit: "user",
+    strokeWidth: 2, //basicWidth,
     strokeOpacity: 0.2, // -----make the chain
   });
 }
@@ -318,7 +324,8 @@ slidersInfo.forEach((sl, index) => {
     [[sl.xpos, sl.ypos], [sl.xpos + sliderLength, sl.ypos], sl.values],
     {
       name: sl.name,
-      size: 3 * basicWidth,
+      sizeUnit: "user",
+      size: 5, //3 * basicWidth,
       baseline: { strokeColor: myBlue, strokeWidth: 10, fontUnit: "vw" },
       highline: { strokeColor: "olive" },
       fillColor: myYellow,
@@ -339,18 +346,18 @@ slidersInfo.forEach((sl, index) => {
 
 // ---------------------------END SLIDERS -------------------------------------------
 //----------------REACTIVITY----------------------------------------------------
-window.addEventListener("resize", handleResize, false);
+// window.addEventListener("resize", handleResize, false);
 
-function handleResize() {
-  basicWidth = calculateBasicWidth();
-  pointString.fullUpdate();
-  board.fullUpdate();
-}
+// function handleResize() {
+//   basicWidth = calculateBasicWidth();
+//   pointString.set();
+//   board.fullUpdate();
+// }
 
 function calculateBasicWidth() {
   let theWidth = document.documentElement.clientWidth;
 
-  let basicWidth = 1;
+  let basicWidth = 2;
 
   if (theWidth <= 360) {
     basicWidth = 2;
