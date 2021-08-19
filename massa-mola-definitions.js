@@ -4,7 +4,7 @@
 
 //console.log("Width =", oldWidth, "basicWidth =", basicWidth);
 
-var basicWidth = calculateBasicWidth();
+//var basicWidth = calculateBasicWidth();
 const length = 36;
 const duration = 36e3;
 
@@ -94,21 +94,21 @@ let xaxis = board.create(
   ],
   {
     name: "<math><mi>t (seg)</mi></math>", //  Tempo
-    withLabel: true,
+    withLabel: false,
     ticks: { visible: true },
     basicUnit: "user",
     strokeWidth: 1, //basicWidth,
 
-    label: {
-      // autoPosition: true,
-      position: "top", // possible values are 'lft', 'rt', 'top', 'bot'
-      //anchorX: "rt",
-      //anchorY: "bot",
-      offset: [120 * basicWidth, 6 * basicWidth], // (in pixels)
-      fontUnit: "vw",
-      fontSize: 2,
-      // strokeColor: "RED",
-    },
+    // label: {
+    //   // autoPosition: true,
+    //   position: "top", // possible values are 'lft', 'rt', 'top', 'bot'
+    //   //anchorX: "rt",
+    //   //anchorY: "bot",
+    //   offset: [120 * basicWidth, 6 * basicWidth], // (in pixels)
+    //   fontUnit: "vw",
+    //   fontSize: 2,
+    //   // strokeColor: "RED",
+    // },
   }
 );
 
@@ -135,6 +135,23 @@ let ticks = board.create("ticks", [xaxis, ticksArray], {
     fontSize: 1,
   },
 });
+
+const labelAxis = board.create(
+  "text",
+  [
+    190,
+    15,
+    function () {
+      return "$$t \\, (seg)$$";
+    },
+  ],
+  {
+    fontSize: 1.5,
+    fontUnit: "vw",
+    color: texColor,
+    useMathJax: true,
+  }
+);
 
 //--------------------------------INPUT OF OMEGA2---------------------------------
 // const input = board.create(
