@@ -4,7 +4,7 @@
 
 //console.log("Width =", oldWidth, "basicWidth =", basicWidth);
 
-//var basicWidth = calculateBasicWidth();
+var basicWidth = calculateBasicWidth();
 const length = 36;
 const duration = 36e3;
 
@@ -93,15 +93,18 @@ let xaxis = board.create(
     [1, 0],
   ],
   {
-    name: "<math><mi>t</mi></math>", //  Tempo
+    name: "<math><mi>t (seg)</mi></math>", //  Tempo
     withLabel: true,
     ticks: { visible: true },
     basicUnit: "user",
     strokeWidth: 1, //basicWidth,
 
     label: {
-      position: "rt", // possible values are 'lft', 'rt', 'top', 'bot'
-      offset: [-25, -25], // (in pixels)
+      // autoPosition: true,
+      position: "top", // possible values are 'lft', 'rt', 'top', 'bot'
+      //anchorX: "rt",
+      //anchorY: "bot",
+      offset: [60 * basicWidth, 6 * basicWidth], // (in pixels)
       fontUnit: "vw",
       fontSize: 2,
       // strokeColor: "RED",
