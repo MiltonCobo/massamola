@@ -104,7 +104,7 @@ let xaxis = board.create(
       position: "top", // possible values are 'lft', 'rt', 'top', 'bot'
       //anchorX: "rt",
       //anchorY: "bot",
-      offset: [60 * basicWidth, 6 * basicWidth], // (in pixels)
+      offset: [90 * basicWidth, 6 * basicWidth], // (in pixels)
       fontUnit: "vw",
       fontSize: 2,
       // strokeColor: "RED",
